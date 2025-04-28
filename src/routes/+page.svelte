@@ -13,9 +13,9 @@
       <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r text-white mb-4 mt-[100px]">
         Hey I'm Joshua
       </h1>
-      <a aria-hidden="true" href="https://go.joshua.moe/github">Github</a>
-      <a aria-hidden="true" href="https://go.joshua.moe/discord">Discord</a>
-      <a aria-hidden="true" href="https://go.joshua.moe/anilist">Anlist</a>
+      <a aria-hidden="true" target="_blank" href="https://go.joshua.moe/github">Github</a>
+      <a aria-hidden="true" target="_blank" href="https://go.joshua.moe/discord">Discord</a>
+      <a aria-hidden="true" target="_blank" href="https://go.joshua.moe/anilist">Anlist</a>
       <a aria-hidden="true" href="mailto:hello@joshua.moe">Email</a>
 
       <p class="text-2xl font-semibold text-white pt-[10px]">Who Am I?</p>
