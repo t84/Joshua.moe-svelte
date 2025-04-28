@@ -16,11 +16,13 @@
   let fetchInterval = null;
 
   const fetchSpotifyData = async () => {
-    try {
-      const { data } = await axios.get('https://api.lanyard.rest/v1/users/442142462857707520');
-      const spotify = data.data?.spotify;
+  try {
+    const { data } = await axios.get('https://api.lanyard.rest/v1/users/442142462857707520');
+    const spotify = data.data?.spotify;
 
-      if (spotify && (!currentTrack || spotify.song !== currentTrack.song)) {
+    if (spotify) {
+      if (!currentTrack || spotify.song !== currentTrack.song) {
+        // New song
         if (interval) clearInterval(interval);
         currentTrack = spotify;
         if (typeof localStorage !== 'undefined') {
@@ -36,16 +38,22 @@
         startTime = spotify.timestamps.start;
         endTime = spotify.timestamps.end;
         durationMs = endTime - startTime;
-        progressMs = 0;
+        progressMs = Date.now() - startTime;
         isListening = true;
         startProgressInterval();
-      } else if (!spotify) {
-        resetState();
+      } else {
+        startTime = spotify.timestamps.start;
+        endTime = spotify.timestamps.end;
+        durationMs = endTime - startTime;
+        progressMs = Date.now() - startTime;
       }
-    } catch {
+    } else {
       resetState();
     }
-  };
+  } catch {
+    resetState();
+  }
+};
 
   const startProgressInterval = () => {
     interval = setInterval(() => {

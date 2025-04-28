@@ -1,4 +1,3 @@
-<!-- src/lib/components/BDay.svelte -->
 <script>
     import { onMount, onDestroy } from 'svelte';
   
