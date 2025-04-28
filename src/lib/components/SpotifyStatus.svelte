@@ -96,7 +96,7 @@
       }
     }
     fetchSpotifyData();
-    fetchInterval = setInterval(fetchSpotifyData, 5000);
+    fetchInterval = setInterval(fetchSpotifyData, 2000);
   });
 
   onDestroy(() => {
