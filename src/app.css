@@ -2,11 +2,19 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: url('../fonts/font.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
 
+  
 body {
     background-color: #181818;
     color: white;
     text-align: center;
+    font-family: 'JetBrains Mono', monospace;
 }
 
 a {
