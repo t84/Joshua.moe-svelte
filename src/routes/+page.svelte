@@ -41,12 +41,16 @@
       <h2 class="text-2xl font-semibold text-white">My Projects</h2>
       <ul class="mt-4 space-y-2">
         <li class="text-lg text-gray-300 flex items-center justify-between">
-          <span>Pokedex bot</span>
+          <a href="https://discord.com/oauth2/authorize?client_id=1083988142534705162">
+            <span>Pokedex bot</span>
+          </a>
           <div class="flex-grow border-t border-gray-500 mx-4"></div>
           <span class="text-sm text-gray-500">Founder/Dev</span>
         </li>
         <li class="text-lg text-gray-300 flex items-center justify-between">
-          <span>Shigeo - My personal Discord bot</span>
+          <a href="https://discord.com/oauth2/authorize?client_id=1148141505832296509">
+            <span>Shigeo - My personal Discord bot</span>
+          </a>
           <div class="flex-grow border-t border-gray-500 mx-4"></div>
           <span class="text-sm text-gray-500">Founder/Dev</span>
         </li>
