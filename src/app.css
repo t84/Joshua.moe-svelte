@@ -8,3 +8,13 @@ body {
     color: white;
     text-align: center;
 }
+
+a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #cccccc;
+  text-decoration: underline;
+}
