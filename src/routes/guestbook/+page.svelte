@@ -7,7 +7,7 @@
       name: 'Joshua',
       message: 'Hey this is pretty cool!',
       timestamp: '2025-04-29T22:12:58.957Z',
-      avatar: 'src\\images\\Joshua_avatar.png'
+      avatar: '/images/Joshua_avatar.png'
     }
   ];
 
