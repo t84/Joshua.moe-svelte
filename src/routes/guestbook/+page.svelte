@@ -101,7 +101,7 @@
     />
     <textarea
       class="w-full border p-2 rounded text-black text-center"
-      placeholder="Your message"
+      placeholder="Your message and avatar url (if none is provided i will use a default one)"
       rows="3"
       bind:value={message}></textarea>
     <button
