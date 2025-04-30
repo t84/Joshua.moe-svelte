@@ -47,13 +47,11 @@
             const userData = msg.d[USER_ID] || {};
             const spotify = userData.spotify || null;
 
-            console.log(msg, 'hello - INIT_STATE');
             updateSpotifyData(spotify);
 
           } else if (msg.t === 'PRESENCE_UPDATE') {
             const spotify = msg.d.spotify || null;
 
-            console.log(msg, 'hello1 - PRESENCE_UPDATE');
             updateSpotifyData(spotify);
           }
           break;
