@@ -1,7 +1,8 @@
 <script>
   import { onMount, onDestroy } from 'svelte';
-  import axios from 'axios';
 
+  let socket;
+  let heartbeatInterval;
   let currentTrack = null;
   let isListening = false;
   let artist = '';
@@ -13,17 +14,63 @@
   let durationMs = 0;
   let progressMs = null;
   let interval = null;
-  let fetchInterval = null;
 
-  const fetchSpotifyData = async () => {
-  try {
-    const { data } = await axios.get('https://api.lanyard.rest/v1/users/442142462857707520');
-    const spotify = data.data?.spotify;
+  const USER_ID = '442142462857707520';
 
+  const connectWebSocket = () => {
+    socket = new WebSocket('wss://api.lanyard.rest/socket');
+
+    socket.addEventListener('open', () => {
+      console.log('WebSocket connection opened');
+    });
+
+    socket.addEventListener('message', (event) => {
+      const msg = JSON.parse(event.data);
+
+
+      switch (msg.op) {
+        case 1:
+          socket.send(JSON.stringify({
+            op: 2,
+            d: {
+              subscribe_to_ids: [USER_ID]
+            }
+          }));
+
+          heartbeatInterval = setInterval(() => {
+            socket.send(JSON.stringify({ op: 3 }));
+          }, msg.d.heartbeat_interval);
+          break;
+
+        case 0:
+          if (msg.t ==='INIT_STATE') {
+            const userData = msg.d[USER_ID] || {};
+            const spotify = userData.spotify || null;
+
+            console.log(msg, 'hello - INIT_STATE');
+            updateSpotifyData(spotify);
+
+          } else if (msg.t === 'PRESENCE_UPDATE') {
+            const spotify = msg.d.spotify || null;
+
+            console.log(msg, 'hello1 - PRESENCE_UPDATE');
+            updateSpotifyData(spotify);
+          }
+          break;
+      }
+    });
+
+    socket.addEventListener('close', () => {
+      console.log('WebSocket closed. Attempting to reconnect...');
+      clearInterval(heartbeatInterval);
+      setTimeout(connectWebSocket, 3000);
+    });
+  };
+
+  const updateSpotifyData = (spotify) => {
     if (spotify) {
       if (!currentTrack || spotify.song !== currentTrack.song) {
-        // New song
-        if (interval) clearInterval(interval);
+        clearInterval(interval);
         currentTrack = spotify;
         if (typeof localStorage !== 'undefined') {
           localStorage.setItem('currentTrack', JSON.stringify({
@@ -50,10 +97,7 @@
     } else {
       resetState();
     }
-  } catch {
-    resetState();
-  }
-};
+  };
 
   const startProgressInterval = () => {
     interval = setInterval(() => {
@@ -103,13 +147,15 @@
         startProgressInterval();
       }
     }
-    fetchSpotifyData();
-    fetchInterval = setInterval(fetchSpotifyData, 2000);
+    connectWebSocket();
   });
 
   onDestroy(() => {
     clearInterval(interval);
-    clearInterval(fetchInterval);
+    clearInterval(heartbeatInterval);
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      socket.close();
+    }
   });
 </script>
 
@@ -157,6 +203,3 @@
     white-space: nowrap;
   }
 </style>
-
-
-
